@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Native\Laravel\Facades\Window;
 use Native\Laravel\Contracts\ProvidesPhpIni;
-use Native\Laravel\GlobalShortcut;
+use Native\Laravel\Facades\GlobalShortcut;
+
+use App\Events\ProcessCopiedTextEvent;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
 {
@@ -15,6 +17,10 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         Window::open();
+
+        GlobalShortcut::key('CmdOrCtrl+Alt+C')
+        ->event(ProcessCopiedTextEvent::class)
+        ->register();
     }
 
     /**
