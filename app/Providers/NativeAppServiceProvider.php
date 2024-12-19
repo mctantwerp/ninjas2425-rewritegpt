@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Native\Laravel\Facades\Window;
+use Native\Laravel\Facades\MenuBar;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\GlobalShortcut;
 
@@ -16,7 +16,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        Window::open();
+        MenuBar::create();
 
         GlobalShortcut::key('CmdOrCtrl+Alt+C')
         ->event(ProcessCopiedTextEvent::class)
