@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Information extends Model
 {
-    protected $fillable = ['api_key', 'prompt'];
+    protected $fillable = ['api_key', 'prompt', 'prompt_id'];
 }
