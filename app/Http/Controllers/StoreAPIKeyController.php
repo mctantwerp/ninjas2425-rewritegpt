@@ -21,10 +21,6 @@ class StoreAPIKeyController extends Controller
             $information->update(['api_key' => $apiKey]);
         }
 
-        if(!$information) {
-            Information::create(['api_key' => $apiKey]);
-        }
-
         return response()->json(['success' => 'API Key stored successfully']);
     }
 }
