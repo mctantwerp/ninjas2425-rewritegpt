@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
-use Native\Laravel\Facades\MenuBar;
+// use Native\Laravel\Facades\MenuBar;
+use Native\Laravel\Facades\Window;
 use Native\Laravel\Contracts\ProvidesPhpIni;
 use Native\Laravel\Facades\GlobalShortcut;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\Information;
+use Database\Seeders\InformationSeeder;
 
 use App\Events\ProcessCopiedTextEvent;
 
@@ -16,7 +20,11 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-        MenuBar::create();
+        if(Information::count() === 0) {
+            Artisan::call('db:seed', ['--class' => InformationSeeder::class]);
+        }
+        
+        Window::open();
 
         GlobalShortcut::key('CmdOrCtrl+Alt+C')
         ->event(ProcessCopiedTextEvent::class)
