@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Log;
 
 class ProcessCopiedTextEvent implements ShouldBroadcastNow
 {
-
     public function broadcastOn(): array
     {
-
         return [
             new Channel('nativephp'),
         ];
