@@ -14,8 +14,9 @@ class ProcessCopiedTextController extends Controller
 {
     public function __invoke(){
 
-        $copiedText = Clipboard::text();
         $information = Information::first();
+        $prompt = $information->prompt;
+        $copiedText = Clipboard::text();
 
         if(!$information){
             Notification::title('Rewrite GPT')
@@ -30,7 +31,7 @@ class ProcessCopiedTextController extends Controller
             $result = $client->chat()->create([
                 'model' => 'gpt-3.5-turbo',
                 'messages' => [
-                    ['role' => 'user', 'content' => 'Rewrite the following sentence: ' . $copiedText],
+                    ['role' => 'user', 'content' => $prompt . $copiedText],
                 ],
             ]);
     
