@@ -18,25 +18,20 @@ class StorePromptController extends Controller
         ]);
 
         $prompt = '';
+        $prompt_id = (int)$validated['prompt'];
 
-        if($validated['prompt'] == 1){
+        if($prompt_id === 1){
             $prompt = 'Rewrite the following sentence: ';
         }
 
-        if($validated['prompt'] == 2){
+        if($prompt_id === 2){
             $prompt = 'In the ' . $validated['language'] . ' language, rewrite the following sentence: ';
         }
-
-        Log::info($prompt);
 
         $information = Information::first();
 
         if($information){
-            $information->update(['prompt' => $prompt]);
-        }
-
-        if(!$information){
-            Information::create(['prompt' => $prompt]);
+            $information->update(['prompt' => $prompt, 'prompt_id' => $prompt_id]);
         }
 
         return response()->json(['success' => true]);
