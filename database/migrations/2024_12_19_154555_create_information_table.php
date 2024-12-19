@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('information', function (Blueprint $table) {
             $table->id();
-            $table->string('api_key');
+            $table->string('api_key')->nullable();
             $table->string('prompt')->default('Rewrite the following text: ');
+            $table->integer('prompt_id')->default(1);
             $table->timestamps();
         });
     }
