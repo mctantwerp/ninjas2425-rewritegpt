@@ -42,7 +42,7 @@ class ProcessCopiedTextController extends Controller
                 ->message('Your text has been rewritten and copied to the clipboard.')
                 ->show();
     
-            return response()->json(['success' => true]);
+            return response()->json(['success' => 'Your text has been rewritten and copied to the clipboard.']);
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());

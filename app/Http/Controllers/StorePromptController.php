@@ -34,7 +34,6 @@ class StorePromptController extends Controller
             $information->update(['prompt' => $prompt, 'prompt_id' => $prompt_id]);
         }
 
-        return response()->json(['success' => true]);
-    
+        return response()->json(['success' => 'Processing option saved successfully!']);
     }
 }
