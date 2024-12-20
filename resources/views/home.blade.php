@@ -4,33 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rewrite GPT</title>
-    @vite('resources/css/app.css')
-    <script>
-        function toggleLanguageSelect() {
-            const translateRadio = document.querySelector('input[value="2"]');
-            const languageSelect = document.getElementById('languageSelect');
-            languageSelect.style.display = translateRadio.checked ? 'block' : 'none';
-        }
-
-        function toggleModal() {
-            const modal = document.getElementById('settingsModal');
-            modal.classList.toggle('hidden');
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('settingsModal');
-            if (event.target === modal) {
-                modal.classList.add('hidden');
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-white mb-2">RewriteGPT</h1>
-            <p class="text-gray-400">A powerful tool to rewrite text or translate content</p>
+            <p class="text-gray-400">
+                Copy text, then press <span class="font-bold">Ctrl + Alt + C</span> (Windows) or <span class="font-bold">⌘ + ⌥ + C</span> (Mac)
+            </p>
         </div>
 
         <!-- Options Section -->
@@ -38,7 +20,7 @@
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-white">Processing Options</h2>
                 <button 
-                    onclick="toggleModal()"
+                    data-modal-trigger
                     class="text-gray-400 hover:text-white bg-gray-700 hover:bg-gray-600 rounded-md px-3 py-2 text-sm transition-colors duration-200 flex items-center gap-2"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -58,7 +40,7 @@
                                 name="prompt"
                                 value="1"
                                 @if(isset($information->prompt_id) && $information->prompt_id === 1) checked @endif
-                                onchange="toggleLanguageSelect()"
+                                data-language-trigger
                                 class="h-4 w-4 text-blue-700 bg-gray-700 border-gray-600 focus:ring-blue-700 focus:ring-offset-gray-800"
                             >
                             <label for="rewrite" class="ml-2 text-sm font-medium text-gray-300">
@@ -72,7 +54,7 @@
                                 name="prompt"
                                 value="2"
                                 @if(isset($information->prompt_id) && $information->prompt_id === 2) checked @endif
-                                onchange="toggleLanguageSelect()"
+                                data-language-trigger
                                 class="h-4 w-4 text-blue-700 bg-gray-700 border-gray-600 focus:ring-blue-700 focus:ring-offset-gray-800"
                             >
                             <label for="translate" class="ml-2 text-sm font-medium text-gray-300">
@@ -84,9 +66,9 @@
                     <select
                         id="languageSelect"
                         name="language"
-                        class="w-full rounded-md bg-gray-700 border-gray-600 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent"
+                        class="w-full rounded-md bg-gray-700 border-gray-600 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-gray-600"
                         style="display: {{ isset($information->prompt_id) && $information->prompt_id === 2 ? 'block' : 'none' }}"
-                    >
+                        >
                         <option value="Afrikaans">Afrikaans</option>
                         <option value="Albanian">Albanian</option>
                         <option value="Arabic">Arabic</option>
@@ -175,8 +157,8 @@
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-white">API Configuration</h2>
                 <button 
-                    onclick="toggleModal()" 
-                    class="text-gray-400 hover:text-white"
+                data-modal-trigger
+                class="text-gray-400 hover:text-white"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -190,13 +172,13 @@
                         OpenAI API Key
                     </label>
                     <input
-                        type="text"
-                        name="api_key"
-                        id="api_key"
-                        placeholder="Enter your OpenAI API key here..."
-                        value="{{ $information->api_key ?? '' }}"
-                        class="w-full rounded-md bg-gray-700 border-gray-600 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent placeholder-gray-400"
-                    >
+                    type="text"
+                    name="api_key"
+                    id="api_key"
+                    placeholder="Enter your OpenAI API key here..."
+                    value="{{ $information->api_key ?? '' }}"
+                    class="w-full rounded-md bg-gray-700 border-gray-600 text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent placeholder-gray-400 blur-[2px] focus:blur-none transition-all duration-300"
+                    />
                 </div>
                 <button type="submit" class="w-full bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-900 transition-colors">
                     Save API Key
@@ -204,11 +186,5 @@
             </form>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleLanguageSelect();
-        });
-    </script>
 </body>
 </html>
