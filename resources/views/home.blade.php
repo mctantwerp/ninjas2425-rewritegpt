@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Rewrite GPT</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -29,7 +30,7 @@
                 
                 </button>
             </div>
-            <form action="{{ route('store.prompt') }}" method="POST" class="space-y-6">
+            <form action="{{ route('store.prompt') }}" method="POST" class="space-y-6" id="prompt_form">
                 @csrf
                 <div class="space-y-4">
                     <div class="flex flex-col sm:flex-row gap-4">
@@ -165,7 +166,7 @@
                     </svg>
                 </button>
             </div>
-            <form action="{{ route('store.apikey') }}" method="POST" class="space-y-4">
+            <form action="{{ route('store.apikey') }}" method="POST" class="space-y-4" id="api_key_form">
                 @csrf
                 <div>
                     <label for="api_key" class="block text-sm font-medium text-gray-300 mb-1">
@@ -186,5 +187,10 @@
             </form>
         </div>
     </div>
+
+    <!-- Notifcations -->
+    <div id="notification-container" class="fixed top-5 right-5 space-y-4 z-50"></div>
+
+</div>
 </body>
 </html>
