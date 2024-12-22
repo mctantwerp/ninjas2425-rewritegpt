@@ -9,6 +9,7 @@ use Native\Laravel\Facades\Clipboard;
 use Native\Laravel\Facades\Notification;
 use OpenAI;
 use Illuminate\Support\Facades\Log;
+use App\Events\JsonResponseEvent;
 
 class ProcessCopiedTextController extends Controller
 {
@@ -23,7 +24,8 @@ class ProcessCopiedTextController extends Controller
             ->message('Please add your OpenAI API key in the settings.')
             ->show();
 
-            return response()->json(['error' => 'Please add your OpenAI API key in the settings.']);
+            $jsonResponse = ['error' => 'Please add your OpenAI API key in the settings.'];
+            event(new JsonResponseEvent($jsonResponse));
         }
 
         try{
@@ -41,20 +43,16 @@ class ProcessCopiedTextController extends Controller
             Notification::title('Rewrite GPT')
                 ->message('Your text has been rewritten and copied to the clipboard.')
                 ->show();
-    
-            return response()->json(['success' => 'Your text has been rewritten and copied to the clipboard.']);
+            $jsonResponse = ['success' => 'Your text has been rewritten and copied to the clipboard.'];
+            event(new JsonResponseEvent($jsonResponse));
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             Notification::title('Rewrite GPT')
                 ->message('Invalid API key or API error. Please check your settings.')
                 ->show();
             
-            return response()->json([
-                'error' => 'API Error',
-                'message' => $e->getMessage()
-            ], 401)
-            ->header('Content-Type', 'application/json');
+            $jsonResponse = ['error' => $e->getMessage()];   
+            event(new JsonResponseEvent($jsonResponse));
         }
     }
 }
