@@ -7,7 +7,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use App\Service\StaticCache;
 
 class ProcessCopiedTextEvent implements ShouldBroadcastNow
-{
+{    
     public function broadcastOn(): array
     {
         if (StaticCache::has('broadcasted')) {
