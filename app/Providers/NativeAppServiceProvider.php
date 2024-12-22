@@ -24,10 +24,11 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         }
 
         MenuBar::create()
+            ->icon(storage_path('app/menuBarIconTemplate.png'))
             ->width(550)
             ->height(415)
             ->resizable(false);
-
+        
         GlobalShortcut::key('CmdOrCtrl+Alt+C')
         ->event(ProcessCopiedTextEvent::class)
         ->register();
