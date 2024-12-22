@@ -68,3 +68,14 @@ promptForm.addEventListener('submit', (event) => {
     const formData = new FormData(promptForm);
     fetchPromptResponse(formData);
 });
+
+window.Native.on("App\\Events\\JsonResponseEvent", (payload) => {
+
+    if(payload.response.success) {
+        showNotification('success', payload.response.success);
+    }
+
+    if(payload.response.error) {
+        showNotification('error', payload.response.error);
+    }
+});
