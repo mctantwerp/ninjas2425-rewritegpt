@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Rewrite GPT'),
+    'name' => env('APP_NAME', 'RewriteGPT'),
 
     /*
     |--------------------------------------------------------------------------
