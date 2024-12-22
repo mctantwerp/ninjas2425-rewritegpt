@@ -20,7 +20,7 @@ class ProcessCopiedTextController extends Controller
         $copiedText = Clipboard::text();
 
         if(!$information){
-            Notification::title('Rewrite GPT')
+            Notification::title('RewriteGPT')
             ->message('Please add your OpenAI API key in the settings.')
             ->show();
 
@@ -40,14 +40,14 @@ class ProcessCopiedTextController extends Controller
             $rewrittenText = $result->choices[0]->message->content;
             Clipboard::text($rewrittenText);
     
-            Notification::title('Rewrite GPT')
+            Notification::title('RewriteGPT')
                 ->message('Your text has been rewritten and copied to the clipboard.')
                 ->show();
             $jsonResponse = ['success' => 'Your text has been rewritten and copied to the clipboard.'];
             event(new JsonResponseEvent($jsonResponse));
 
         } catch (\Exception $e) {
-            Notification::title('Rewrite GPT')
+            Notification::title('RewriteGPT')
                 ->message('Invalid API key or API error. Please check your settings.')
                 ->show();
             

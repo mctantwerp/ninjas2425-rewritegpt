@@ -28,7 +28,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->width(550)
             ->height(415)
             ->resizable(false);
-        
+                    
         GlobalShortcut::key('CmdOrCtrl+Alt+C')
         ->event(ProcessCopiedTextEvent::class)
         ->register();
