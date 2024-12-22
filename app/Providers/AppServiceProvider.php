@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use App\Events\ProcessCopiedTextEvent;
+use App\Http\Controllers\ProcessCopiedTextController;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Controllers\ProcessCopiedTextController;
+use App\Events\JsonResponseEvent;
+use App\Listeners\JsonResponseListener;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(ProcessCopiedTextEvent::class, ProcessCopiedTextController::class); 
+        Event::listen(ProcessCopiedTextEvent::class, ProcessCopiedTextController::class);
+
+        Event::listen(JsonResponseEvent::class, JsonResponseListener::class);
     }
 }
