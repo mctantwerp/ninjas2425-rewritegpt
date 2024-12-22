@@ -17,7 +17,5 @@ class JsonResponseListener
         $response = $event->response;
         
         $response = json_encode($response);
-
-        Log::info($response);
     }
 }
